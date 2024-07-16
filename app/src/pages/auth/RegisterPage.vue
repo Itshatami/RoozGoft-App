@@ -24,17 +24,14 @@
         <!-- brand -->
         <h4 class="text-h3 q-my-md">RoozGoft</h4>
         <h4 class="text-body1 q-my-md">خوش آمدید</h4>
-        <q-form
-          @submit="onSubmit"
-          @reset="onReset"
-          class="q-gutter-md full-width"
-        >
+        <div class="q-gutter-md full-width">
           <!-- username -->
           <q-input
             v-model="username"
             label="Username"
             hint="Enter Your Username"
             lazy-rules
+            :ref="usernameRef"
             :rules="[
               (val) => (val && val.length > 0) || 'Please type something',
             ]"
@@ -46,6 +43,7 @@
             label="Email *"
             hint="Example@info.com"
             lazy-rules
+            :ref="emailRef"
             :rules="[
               (val) => (val && val.length > 0) || 'Please type something',
             ]"
@@ -56,6 +54,7 @@
             v-model="password"
             label="Password"
             lazy-rules
+            :ref="passwordRef"
             :rules="[
               (val) => (val !== null && val !== '') || 'Please type your age',
               (val) => (val > 0 && val < 100) || 'Please type a real age',
@@ -67,6 +66,7 @@
             v-model="confirmPassword"
             label="Confirm Password"
             lazy-rules
+            :ref="confirmPasswordRef"
             :rules="[
               (val) => (val !== null && val !== '') || 'Please type your age',
               (val) => (val > 0 && val < 100) || 'Please type a real age',
@@ -92,7 +92,7 @@
               class="full-width q-py-sm"
             />
           </div>
-        </q-form>
+        </div>
       </div>
       <!-- right -->
       <div
@@ -100,7 +100,7 @@
         style="
           background-color: white !important;
           border-radius: 0px 15px 15px 0px;
-          box-shadow: 27px 0px 50px 2px rgba(0, 0, 0, 0.40);
+          box-shadow: 27px 0px 50px 2px rgba(0, 0, 0, 0.4);
         "
       >
         <swiper
@@ -183,7 +183,11 @@
 </template>
 
 <script>
-import { ref } from "vue";
+import { ref , toRefs } from "vue";
+import { useQuasar } from "quasar";
+import { api } from "src/boot/axios.js";
+import { useRouter } from "vue-router";
+
 // Import Swiper Vue.js components
 import { Swiper, SwiperSlide } from "swiper/vue";
 
@@ -205,18 +209,66 @@ export default {
     SwiperSlide,
   },
   setup() {
+    const q = useQuasar();
+    const router = useRouter();
     const username = ref("");
+    const usernameRef = ref(null);
     const email = ref("");
+    const emailRef = ref(null);
     const password = ref("");
+    const passwordRef = ref(null);
     const confirmPassword = ref("");
+    const confirmPasswordRef = ref(null);
     const terms = ref(false);
+
+    function register(evt) {
+      usernameRef.value.validate();
+      emailRef.value.validate();
+      passwordRef.value.validate();
+      confirmPasswordRef.value.validate();
+
+      if (
+        usernameRef.value.hasError &&
+        emailRef.value.hasError &&
+        passwordRef.value.hasError &&
+        confirmPasswordRef.value.hasError
+      ) {
+        q.notify({
+          message: "اطلاعات نادرست وارد شدند!",
+          color: "red",
+          position: "top",
+        });
+      } else if (password.value !== confirmPassword.value) {
+        q.notify({
+          message: "تکرار پسوورد اشتباه است!",
+          color: "red",
+          position: "top",
+        });
+      } else {
+        api.post("api/auth/register", {
+          username: username.value,
+          email: email.value,
+          password: password.value,
+        }).then(res => {
+          console.log(res.data.status);
+          if (res.data.status) {
+            router.push("/")
+          }
+        });
+      }
+    }
 
     return {
       username,
+      usernameRef,
       email,
+      emailRef,
       password,
+      passwordRef,
       confirmPassword,
+      confirmPasswordRef,
       terms,
+      register,
       modules: [Autoplay, Pagination, Navigation],
     };
   },
