@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use Exception;
 use Illuminate\Http\Client\Request as ClientRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -18,18 +19,16 @@ class RegisterController extends Controller
             'password' => 'required|min:3|max:55',
             'confirmPassword' => 'required|same:password',
         ]);
-        if ($validator->fails()) {
-            return response()->json($validator->errors()->first(), 422);
-        }
+        if ($validator->fails())
+            return response()->json($validator->errors(), 422);
+
 
         try {
             DB::beginTransaction();
             $user = User::create([
-                'name' => $request->name,
+                'username' => $request->username,
                 'email' => $request->email,
                 'password' => $request->password,
-                'province_id' => 1,
-                'city_id' => 1
             ]);
             if ($user) {
                 DB::commit();
@@ -37,10 +36,10 @@ class RegisterController extends Controller
             } else {
                 throw new Exception("cant create user");
             }
-            return $this->sResponse(['user' => $user, 'token' => $token]);
+            return response()->json(['user' => $user, 'token' => $token]);
         } catch (Exception $e) {
             DB::rollBack();
-            return $this->eResponse($e->getMessage(), 400);
+            return response()->json($e->getMessage(), 400);
         }
     }
 }

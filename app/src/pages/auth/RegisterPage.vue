@@ -31,7 +31,7 @@
             label="Username"
             hint="Enter Your Username"
             lazy-rules
-            :ref="usernameRef"
+            ref="usernameRef"
             :rules="[
               (val) => (val && val.length > 0) || 'Please type something',
             ]"
@@ -43,7 +43,7 @@
             label="Email *"
             hint="Example@info.com"
             lazy-rules
-            :ref="emailRef"
+            ref="emailRef"
             :rules="[
               (val) => (val && val.length > 0) || 'Please type something',
             ]"
@@ -54,10 +54,11 @@
             v-model="password"
             label="Password"
             lazy-rules
-            :ref="passwordRef"
+            ref="passwordRef"
             :rules="[
-              (val) => (val !== null && val !== '') || 'Please type your age',
-              (val) => (val > 0 && val < 100) || 'Please type a real age',
+              (val) =>
+                (val !== null && val !== '') || 'رمز عبور نباید خالی باشد',
+              (val) => val > 0 || 'رمز عبور نباید خالی باشد',
             ]"
           />
           <!-- confirm-password -->
@@ -66,10 +67,11 @@
             v-model="confirmPassword"
             label="Confirm Password"
             lazy-rules
-            :ref="confirmPasswordRef"
+            ref="confirmPasswordRef"
             :rules="[
-              (val) => (val !== null && val !== '') || 'Please type your age',
-              (val) => (val > 0 && val < 100) || 'Please type a real age',
+              (val) =>
+                (val !== null && val !== '') || 'رمز عبور نباید خالی باشد',
+              (val) => val > 0 || 'رمز عبور نباید خالی باشد',
             ]"
           />
 
@@ -87,7 +89,7 @@
           <div>
             <q-btn
               label="ثبت نام"
-              type="submit"
+              @click="register"
               color="primary"
               class="full-width q-py-sm"
             />
@@ -183,7 +185,7 @@
 </template>
 
 <script>
-import { ref , toRefs } from "vue";
+import { ref, toRefs } from "vue";
 import { useQuasar } from "quasar";
 import { api } from "src/boot/axios.js";
 import { useRouter } from "vue-router";
@@ -221,16 +223,16 @@ export default {
     const confirmPasswordRef = ref(null);
     const terms = ref(false);
 
-    function register(evt) {
+    function register() {
       usernameRef.value.validate();
       emailRef.value.validate();
       passwordRef.value.validate();
       confirmPasswordRef.value.validate();
 
       if (
-        usernameRef.value.hasError &&
-        emailRef.value.hasError &&
-        passwordRef.value.hasError &&
+        usernameRef.value.hasError ||
+        emailRef.value.hasError ||
+        passwordRef.value.hasError ||
         confirmPasswordRef.value.hasError
       ) {
         q.notify({
@@ -245,16 +247,18 @@ export default {
           position: "top",
         });
       } else {
-        api.post("api/auth/register", {
-          username: username.value,
-          email: email.value,
-          password: password.value,
-        }).then(res => {
-          console.log(res.data.status);
-          if (res.data.status) {
-            router.push("/")
-          }
-        });
+        api
+          .post("api/auth/register", {
+            username: username.value,
+            email: email.value,
+            password: password.value,
+          })
+          .then((res) => {
+            console.log(res.data.status);
+            if (res.data.status) {
+              router.push("/");
+            }
+          });
       }
     }
 
