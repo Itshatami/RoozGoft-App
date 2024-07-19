@@ -248,10 +248,11 @@ export default {
         });
       } else {
         api
-          .post("api/auth/register", {
+          .post("api/register", {
             username: username.value,
             email: email.value,
             password: password.value,
+            confirmPassword:confirmPassword.value
           })
           .then((res) => {
             console.log(res.data.status);
