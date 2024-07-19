@@ -252,13 +252,23 @@ export default {
             username: username.value,
             email: email.value,
             password: password.value,
-            confirmPassword:confirmPassword.value
+            confirmPassword: confirmPassword.value,
           })
           .then((res) => {
             console.log(res.data.status);
             if (res.data.status) {
+              console.log(res.data);
+              q.cookies.set("token", res.data.token, { expires: "1d" });
               router.push("/");
             }
+          })
+          .catch((err) => {
+            console.log(err);
+            q.notify({
+              color: "red",
+              position: "top",
+              message: err,
+            });
           });
       }
     }

@@ -36,33 +36,31 @@ export default route(function (/* { store, ssrContext } */) {
   });
 
   Router.beforeEach((to, from, next) => {
-    let access_token_exist = false;
-    if (Cookies.get("access_token")) {
-      access_token_exist = true;
+    let token_exist = false;
+    if (Cookies.get("token")) {
+      token_exist = true;
       api.defaults.headers = {
-        Authorization: "Bearer " + Cookies.get("access_token"),
+        Authorization: "Bearer " + Cookies.get("token"),
         "Content-Type": "application/json",
         Accept: "application/json;charset=utf-8",
       };
     }
     if (to.matched.some((recored) => recored.meta.requireAuth)) {
-      if (access_token_exist) {
+      if (token_exist) {
         next();
       } else {
         next({
-          path: "/login",
+          path: "/auth/login",
           query: { redirect: to.fullPath },
         });
       }
     } else {
       if (
-        to.matched.some(
-          (record) =>
-            record.meta.login ||
-            to.matched.some((record) => record.meta.register)
+        to.matched.some((record) =>record.meta.login ||
+        to.matched.some((record) => record.meta.register)
         )
       ) {
-        if (access_token_exist) {
+        if (token_exist) {
           next({
             path: "/",
             query: { redirect: to.fullPath },
