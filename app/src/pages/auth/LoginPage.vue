@@ -3,7 +3,7 @@
     <!-- content -->
     <main
       class="fullscreen row items-center justify-center"
-      style="background-color: rgb(41, 112, 160)"
+      style="background-color: rgb(77, 168, 190)"
     >
       <div
         class="col-4 q-py-xl q-px-xl"
