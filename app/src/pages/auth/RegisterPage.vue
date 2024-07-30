@@ -8,13 +8,15 @@
       <div
         class="col-4 q-py-xl q-px-xl"
         style="
+          height: 700px;
+          z-index: 99;
           display: flex;
           flex-direction: column;
           align-items: center;
           border-radius: 15px;
           position: relative;
           background-color: white !important;
-          box-shadow: 0px 0px 50px 0px rgba(0, 0, 0, 0.72);
+          box-shadow: -16px 0px 31px -2px rgba(0, 0, 0, 0.59);
         "
       >
         <!-- avatar -->
@@ -22,58 +24,62 @@
           <q-img src="public/RG.png" />
         </q-avatar>
         <!-- brand -->
-        <h4 class="text-h3 q-my-md">RoozGoft</h4>
+        <h4 class="text-h3 q-my-md">روزگفت</h4>
         <h4 class="text-body1 q-my-md">خوش آمدید</h4>
         <div class="q-gutter-md full-width">
           <!-- username -->
           <q-input
             v-model="username"
-            label="Username"
-            hint="Enter Your Username"
+            label="نام کاربری"
             lazy-rules
             ref="usernameRef"
-            :rules="[
-              (val) => (val && val.length > 0) || 'Please type something',
-            ]"
+            :rules="[(val) => (val && val.length > 0) || 'لطفا خالی نگذارید']"
           />
           <!-- email -->
           <q-input
             type="email"
             v-model="email"
-            label="Email *"
+            label="ایمیل"
             hint="Example@info.com"
             lazy-rules
             ref="emailRef"
-            :rules="[
-              (val) => (val && val.length > 0) || 'Please type something',
-            ]"
+            :rules="[(val) => (val && val.length > 0) || 'لطفا خالی نگذارید']"
           />
           <!-- password -->
           <q-input
-            type="number"
             v-model="password"
-            label="Password"
+            label="رمز عبور"
+            :type="isPwd ? 'password' : 'text'"
             lazy-rules
             ref="passwordRef"
-            :rules="[
-              (val) =>
-                (val !== null && val !== '') || 'رمز عبور نباید خالی باشد',
-              (val) => val > 0 || 'رمز عبور نباید خالی باشد',
-            ]"
-          />
+            :rules="[(val) => (val && val.length > 0) || 'لطفا خالی نذارید']"
+          >
+            <template v-slot:append>
+              <q-icon
+                :name="isPwd ? 'visibility_off' : 'visibility'"
+                class="cursor-pointer"
+                @click="isPwd = !isPwd"
+              />
+            </template>
+          </q-input>
+
           <!-- confirm-password -->
           <q-input
-            type="number"
             v-model="confirmPassword"
-            label="Confirm Password"
+            label="رمز عبور"
+            :type="isPwd ? 'password' : 'text'"
             lazy-rules
             ref="confirmPasswordRef"
-            :rules="[
-              (val) =>
-                (val !== null && val !== '') || 'رمز عبور نباید خالی باشد',
-              (val) => val > 0 || 'رمز عبور نباید خالی باشد',
-            ]"
-          />
+            :rules="[(val) => (val && val.length > 0) || 'لطفا خالی نذارید']"
+          >
+            <template v-slot:append>
+              <q-icon
+                :name="isPwd ? 'visibility_off' : 'visibility'"
+                class="cursor-pointer"
+                @click="isPwd = !isPwd"
+              />
+            </template>
+          </q-input>
 
           <div style="display: flex; justify-content: space-between">
             <q-checkbox v-model="terms" label="با شرایط و قوانین موافقم" />
@@ -98,9 +104,12 @@
       </div>
       <!-- right -->
       <div
-        class="col-3"
+        class="col-3 flex justify-center items-center"
         style="
-          background-color: white !important;
+          height: 700px;
+          position: relative;
+          left: -20px;
+          background-color: rgb(50, 175, 184) !important;
           border-radius: 0px 15px 15px 0px;
           box-shadow: 27px 0px 50px 2px rgba(0, 0, 0, 0.4);
         "
@@ -256,10 +265,16 @@ export default {
           })
           .then((res) => {
             console.log(res.data.status);
-            if (res.data.status) {
-              console.log(res.data);
-              q.cookies.set("token", res.data.token, { expires: "1d" });
-              router.push("/");
+            if (res.status) {
+              // console.log(res.data);
+              // q.cookies.set("token", res.data.token, { expires: "1d" });
+              router.push("/auth/login");
+            } else {
+              q.notify({
+                message: res.message,
+                position: "top",
+                color: "red",
+              });
             }
           })
           .catch((err) => {
@@ -267,7 +282,7 @@ export default {
             q.notify({
               color: "red",
               position: "top",
-              message: err,
+              message: err.message,
             });
           });
       }
@@ -285,6 +300,7 @@ export default {
       terms,
       register,
       modules: [Autoplay, Pagination, Navigation],
+      isPwd: ref(true),
     };
   },
 };

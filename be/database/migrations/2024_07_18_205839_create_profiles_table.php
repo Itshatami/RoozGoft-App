@@ -16,10 +16,8 @@ return new class extends Migration
             $table->foreignId("user_id")->constrained("users")->cascadeOnDelete();
             $table->string("avatar")->nullable();
             $table->string("full_name")->nullable();
-            $table->integer("year")->min(1111)->max(9999);
-            $table->integer("month")->min(1)->max(12);
-            $table->integer("day")->min(0)->max(30);
-            $table->enum("gender" , ["male" , "female","other"]);
+            $table->string('job')->nullable();
+            $table->enum("gender", ["male", "female", "other"])->nullable();
             $table->timestamps();
         });
     }

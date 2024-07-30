@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\AdminController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\AuthController;
@@ -16,10 +17,14 @@ use App\Http\Controllers\Api\BillboardController;
 |
 */
 
-// Authenticate
+// Authenticate user
 Route::post('/register', [AuthController::class, 'register']);
 Route::post('/login', [AuthController::class, 'login']);
 Route::post('/logout', [AuthController::class, 'logout'])->middleware('auth:api');
 
-Route::get('/billboards', [BillboardController::class, 'index'])->middleware("auth:api");
-Route::post('/billboards', [BillboardController::class, 'store'])->middleware("auth:api");
+// Authenticate admin
+Route::post('/admin/login', [AuthController::class, 'authAdmin']);
+Route::get("/admin/dashboard", [AdminController::class, 'data'])->middleware(['auth:api', 'admin']);
+
+// Route::get('/billboards', [BillboardController::class, 'index'])->middleware("auth:api");
+// Route::post('/billboards', [BillboardController::class, 'store'])->middleware("auth:api");

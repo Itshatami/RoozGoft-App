@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Models\Role;
 use App\Models\User;
 use Exception;
 use Illuminate\Http\Request;
@@ -13,6 +14,7 @@ use Illuminate\Support\Facades\Validator;
 
 class AuthController extends Controller
 {
+    // Register
     public function register(Request $request)
     {
         $v = Validator::make($request->all(), [
@@ -22,11 +24,20 @@ class AuthController extends Controller
             'confirmPassword' => 'required|same:password'
         ]);
 
+        // request validate fails
         if ($v->fails())
             return response()->json(["status" => false, "message" => "validations fails", "data" => $v->errors()], 401);
 
+        // check user exists
+        $user = User::where('username', $request->username)->first();
+        if ($user)
+            return response()->json(['status' => false, 'message' => 'این نام کاربری قبلا ثبت شده!'], 401);
+
+        // check email already registered
+        $email = User::where('email', $request->email)->value("email");
+        if ($email)
+            return response()->json(['status' => false, 'message' => 'این ایمیل قبلا ثبت شده'], 401);
         try {
-            // $username = DB::table('users')->value('username')-
             DB::beginTransaction();
             $user = User::create([
                 'username' => $request->username,
@@ -36,10 +47,8 @@ class AuthController extends Controller
             if (!$user)
                 throw new Exception("user create falis");
             DB::commit();
-            $token = $user->createToken(env("JWT_SECRET"))->accessToken;
-            return response()->json(['status' => true, 'message' => 'user created', 'user' => $user, 'token' => $token],  201);
+            return response()->json(['status' => true, 'message' => 'user created'], 201);
         } catch (\Throwable $th) {
-            //throw $th;
             DB::rollBack();
             return response()->json(['status' => false, 'message' => $th->getMessage()], 401);
         }
@@ -81,5 +90,40 @@ class AuthController extends Controller
         $user = $request->user();
         $user->tokens()->delete();
         return response()->json(['status' => true, 'message' => 'leged out!'], 202);
+    }
+
+    public function authAdmin(Request $request)
+    {
+        // validate request
+        $v = Validator::make($request->all(), [
+            'username' => 'required|min:3|max:55',
+            'password' => 'required|min:8|max:55',
+        ]);
+
+        // validate fails
+        if ($v->fails())
+            return response()->json(['status' => false, 'message' => 'validator fails', 'data' => $v->messages()], 401);
+
+        // Check user exists
+        $user = User::where('username', $request->username)->first();
+        if (!$user)
+            return response()->json(['status' => false, 'message' => 'user does not register'], 401);
+
+        // check password matches
+        if (!Hash::check($request->password, $user->password))
+            return response(['status' => false, 'message' => 'password incorrect'], 401);
+        // create token
+        $token = $user->createToken(env("JWT_SECRET"))->accessToken;
+        return response()->json(['status' => true, 'user' => $user, 'token' => $token], 202);
+
+
+        // check for role
+        foreach ($user->roles as $role) {
+            if ($role->role == "admin" || $role->role == "editor") {
+                // create token
+                $token = $user->createToken(env("JWT_SECRET"))->accessToken;
+                return response()->json(['status' => true, 'user' => $user, 'token' => $token], 202);
+            }
+        }
     }
 }

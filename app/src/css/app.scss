@@ -1,1 +1,106 @@
 // app global css in SCSS form
+
+// Vazir Font
+@font-face {
+  font-family: vazir;
+  src: url(./fonts/vazir/Vazir-Thin.woff);
+  font-weight: lighter;
+}
+
+@font-face {
+  font-family: vazir;
+  src: url(./fonts/vazir/Vazir-Light.woff);
+  font-weight: 300;
+}
+
+@font-face {
+  font-family: vazir;
+  src: url(./fonts/vazir/Vazir-Medium.woff);
+  font-weight: normal;
+}
+
+@font-face {
+  font-family: vazir;
+  src: url(./fonts/vazir/Vazir-Bold.woff);
+  font-weight: bold;
+}
+
+@font-face {
+  font-family: vazir;
+  src: url(./fonts/vazir/Vazir.woff);
+  font-weight: normal;
+}
+
+// Kalameh Font
+@font-face {
+  font-family: kalameh;
+  src: url(./fonts/kalameh/KalamehWeb-ExtraLight.woff);
+  font-weight: 100;
+}
+@font-face {
+  font-family: kalameh;
+  src: url(./fonts/kalameh/KalamehWeb-Light.woff);
+  font-weight: 200;
+}
+@font-face {
+  font-family: kalameh;
+  src: url(./fonts/kalameh/KalamehWeb-Thin.woff);
+  font-weight: 300;
+}
+@font-face {
+  font-family: kalameh;
+  src: url(./fonts/kalameh/KalamehWeb-Regular.woff);
+  font-weight: 400;
+}
+@font-face {
+  font-family: kalameh;
+  src: url(./fonts/kalameh/KalamehWeb-Medium.woff);
+  font-weight: 500;
+}
+@font-face {
+  font-family: kalameh;
+  src: url(./fonts/kalameh/KalamehWeb-SemiBold.woff);
+  font-weight: 600;
+}
+@font-face {
+  font-family: kalameh;
+  src: url(./fonts/kalameh/KalamehWeb-Bold.woff);
+  font-weight: 700;
+}
+@font-face {
+  font-family: kalameh;
+  src: url(./fonts/kalameh/KalamehWeb-ExtraBold.woff);
+  font-weight: 800;
+}
+
+@font-face {
+  font-family: kalameh;
+  src: url(./fonts/vazir/Vazir.woff);
+  font-weight: normal;
+}
+
+// declare a class which applies it
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+div {
+  font-family: "kalameh" !important;
+}
+p,
+span,
+button {
+  font-family: "vazir";
+}
+
+// Cards
+.my-card{
+  transform:scale(1) ;
+  transition: transform 0.3s ease;
+}
+.my-card:hover {
+  transform: scale(1.1);
+  transition: transform 0.3s ease;
+}

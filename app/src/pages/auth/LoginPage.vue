@@ -8,13 +8,15 @@
       <div
         class="col-4 q-py-xl q-px-xl"
         style="
+          z-index: 99;
+          height: 550px;
           display: flex;
           flex-direction: column;
           align-items: center;
-          border-radius: 15px;
+          border-radius: 10px;
           position: relative;
           background-color: white !important;
-          box-shadow: 0px 0px 50px 0px rgba(0, 0, 0, 0.72);
+          box-shadow: -16px 0px 31px -2px rgba(0, 0, 0, 0.59);
         "
       >
         <!-- avatar -->
@@ -22,34 +24,35 @@
           <q-img src="public/RG.png" />
         </q-avatar>
         <!-- brand -->
-        <h4 class="text-h3 q-my-md">RoozGoft</h4>
+        <h4 class="text-h3 q-my-md">روزگفت</h4>
         <h4 class="text-body1 q-my-md">خوش آمدید</h4>
         <div class="q-gutter-md full-width">
           <!-- username -->
           <q-input
             v-model="username"
-            label="Username"
-            hint="Enter Your Username"
+            label="نام کاربری"
             lazy-rules
             ref="usernameRef"
-            :rules="[
-              (val) => (val && val.length > 0) || 'Please type something',
-            ]"
+            :rules="[(val) => (val && val.length > 0) || 'لطفا خالی نذارید']"
           />
 
           <!-- password -->
           <q-input
-            type="number"
             v-model="password"
-            label="Password"
+            label="رمز عبور"
+            :type="isPwd ? 'password' : 'text'"
             lazy-rules
             ref="passwordRef"
-            :rules="[
-              (val) =>
-                (val !== null && val !== '') || 'رمز عبور نباید خالی باشد',
-              (val) => val > 0 || 'رمز عبور نباید خالی باشد',
-            ]"
-          />
+            :rules="[(val) => (val && val.length > 0) || 'لطفا خالی نذارید']"
+          >
+            <template v-slot:append>
+              <q-icon
+                :name="isPwd ? 'visibility_off' : 'visibility'"
+                class="cursor-pointer"
+                @click="isPwd = !isPwd"
+              />
+            </template>
+          </q-input>
 
           <div style="display: flex; justify-content: space-between">
             <q-checkbox v-model="remeber" label="مرا بخاطر بسپار" />
@@ -64,7 +67,7 @@
 
           <div>
             <q-btn
-              label="ثبت نام"
+              label="ورود"
               @click="login"
               color="primary"
               class="full-width q-py-sm"
@@ -74,10 +77,13 @@
       </div>
       <!-- right -->
       <div
-        class="col-3"
+        class="col-3 flex justify-center items-center"
         style="
-          background-color: white !important;
-          border-radius: 0px 15px 15px 0px;
+          position: relative;
+          left: -20px;
+          height: 550px;
+          background-color: rgb(197, 120, 33) !important;
+          border-radius: 0px 10px 10px 0px;
           box-shadow: 27px 0px 50px 2px rgba(0, 0, 0, 0.4);
         "
       >
@@ -238,6 +244,7 @@ export default {
       remeber,
       login,
       modules: [Autoplay, Pagination, Navigation],
+      isPwd: ref(true),
     };
   },
 };

@@ -5,7 +5,17 @@ const routes = [
     children: [
       {
         path: "",
-        component: () => import("pages/IndexPage.vue"),
+        component: () => import("pages/DashboardPage.vue"),
+        meta: { requireAuth: true },
+      },
+      {
+        path: "posts",
+        component: () => import("pages/PostPage.vue"),
+        meta: { requireAuth: true },
+      },
+      {
+        path: "test",
+        component: () => import("pages/TestPage.vue"),
         meta: { requireAuth: true },
       },
     ],
@@ -23,6 +33,23 @@ const routes = [
         path: "register",
         component: () => import("pages/auth/RegisterPage.vue"),
         meta: { requireAuth: false, register: true },
+      },
+    ],
+  },
+
+  {
+    path: "/admin",
+    component: () => import("layouts/AuthLayout.vue"),
+    children: [
+      {
+        path: "login",
+        component: () => import("pages/admin/LoginAdminPage.vue"),
+        meta: { requireAuth: false },
+      },
+      {
+        path: "dashboard",
+        component: () => import("pages/admin/DashboardAdminPage.vue"),
+        meta: { requireAuth: true },
       },
     ],
   },
