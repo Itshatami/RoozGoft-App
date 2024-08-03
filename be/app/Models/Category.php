@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Category extends Model
 {
-    use HasFactory ,SoftDeletes;
+    use HasFactory;
 
     protected $table = 'categories';
     protected $guarded = [];
@@ -18,5 +18,10 @@ class Category extends Model
     public function quizzes(): HasMany
     {
         return $this->hasMany(Quiz::class);
+    }
+
+    public function articles(): HasMany
+    {
+        return $this->hasMany(Article::class);
     }
 }

@@ -15,10 +15,10 @@ return new class extends Migration
             $table->id();
             $table->string("name");
             $table->string("displayName");
-            $table->string("description");
+            $table->text("description");
             $table->string("image")->nullable();
-            $table->softDeletes();
-            // $table->timestamps();
+            // $table->softDeletes();
+            $table->timestamps();
         });
     }
 

@@ -1,4 +1,6 @@
-{
-    "user_id": 1,
-    "role": "admin"
-}
+[
+    {
+        "user_id": 1,
+        "role": "admin"
+    }
+]

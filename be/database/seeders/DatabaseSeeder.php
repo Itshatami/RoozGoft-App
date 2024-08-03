@@ -20,6 +20,13 @@ class DatabaseSeeder extends Seeder
         // role -> creates 1 admin role
         $this->call(RoleSeeder::class);
 
-        // category ->creates
+        // category ->creates 4 category
+        $this->call(CategorySeeder::class);
+
+        // post -> creates 10 post
+        $this->call(PostSeeder::class);
+
+        // article -> creates 10 article
+        $this->call(ArticleSeeder::class);
     }
 }
