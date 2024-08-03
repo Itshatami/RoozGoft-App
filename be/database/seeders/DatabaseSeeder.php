@@ -14,11 +14,12 @@ class DatabaseSeeder extends Seeder
     {
         // \App\Models\User::factory(10)->create();
 
-        $emails = 
-        \App\Models\Category::factory()->create([
-            'name' => 'self improvement',
-            'displayName' => 'توسعه شخصیت فردی',
-            'email' => 'test@example.com',
-        ]);
+        // user -> creates 10 user
+        $this->call(UserSeeder::class);
+
+        // role -> creates 1 admin role
+        $this->call(RoleSeeder::class);
+
+        // category ->creates
     }
 }
