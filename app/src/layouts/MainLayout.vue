@@ -37,6 +37,7 @@ export default {
   setup() {
     const router = useRouter()
     const tab = ref("dashboard");
+    
     return { tab , router };
   },
 };

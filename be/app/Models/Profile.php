@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Profile extends Model
 {
-    use HasFactory, SoftDeletes;
+    use HasFactory;
 
     protected $table = "profiles";
     protected $guarded = [];

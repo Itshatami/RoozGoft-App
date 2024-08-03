@@ -46,9 +46,35 @@ const routes = [
         component: () => import("pages/admin/LoginAdminPage.vue"),
         meta: { requireAuth: false },
       },
+    ],
+  },
+  {
+    path: "/admin/dashboard",
+    component: () => import("layouts/DashboardLayout.vue"),
+    children: [
       {
-        path: "dashboard",
+        path: "",
         component: () => import("pages/admin/DashboardAdminPage.vue"),
+        meta: { requireAuth: true },
+      },
+      {
+        path: "categories",
+        component: () => import("pages/admin/CategoryPage.vue"),
+        meta: { requireAuth: true },
+      },
+      {
+        path: "articles",
+        component: () => import("pages/admin/ArticlePage.vue"),
+        meta: { requireAuth: true },
+      },
+      {
+        path: "posts",
+        component: () => import("pages/admin/PostPage.vue"),
+        meta: { requireAuth: true },
+      },
+      {
+        path: "users",
+        component: () => import("pages/admin/UserPage.vue"),
         meta: { requireAuth: true },
       },
     ],

@@ -5,6 +5,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\BillboardController;
+use App\Http\Controllers\Api\CategoryController;
 
 /*
 |--------------------------------------------------------------------------
@@ -28,3 +29,6 @@ Route::get("/admin/dashboard", [AdminController::class, 'data'])->middleware(['a
 
 // Route::get('/billboards', [BillboardController::class, 'index'])->middleware("auth:api");
 // Route::post('/billboards', [BillboardController::class, 'store'])->middleware("auth:api");
+
+Route::get('/categories', [CategoryController::class, 'index'])->middleware('auth:api');
+Route::post('/categories', [CategoryController::class, 'soter'])->middleware('auth:api');

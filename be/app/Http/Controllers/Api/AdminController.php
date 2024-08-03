@@ -7,7 +7,9 @@ use Illuminate\Http\Request;
 
 class AdminController extends Controller
 {
-    public function data(Request $request){
-        return 1;
+    public function data(Request $request)
+    {
+        $user = $request->user();
+        return response()->json(['status' => true, 'user' => $user], 200);
     }
 }
