@@ -14,6 +14,8 @@ class Post extends Model
     protected $table = "posts";
     protected $guarded = [];
 
+    protected $with = ['user'];
+
     // User - inverse
     public function user(): BelongsTo
     {

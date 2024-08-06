@@ -49,7 +49,7 @@
         <!-- links -->
         <div class="col-12 q-gutter-y-sm q-pt-md">
           <q-btn
-            @click="router.push('dashboard/categories')"
+            @click="router.push('categories')"
             class="full-width"
             icon-right="category"
             style="background: #ff0080; color: white"

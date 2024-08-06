@@ -1,11 +1,13 @@
 <?php
 
 use App\Http\Controllers\Api\AdminController;
+use App\Http\Controllers\Api\ArticleController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\BillboardController;
 use App\Http\Controllers\Api\CategoryController;
+use App\Http\Controllers\Api\PostController;
 
 /*
 |--------------------------------------------------------------------------
@@ -30,5 +32,19 @@ Route::get("/admin/dashboard", [AdminController::class, 'data'])->middleware(['a
 // Route::get('/billboards', [BillboardController::class, 'index'])->middleware("auth:api");
 // Route::post('/billboards', [BillboardController::class, 'store'])->middleware("auth:api");
 
+// Categories
 Route::get('/categories', [CategoryController::class, 'index'])->middleware('auth:api');
-Route::post('/categories', [CategoryController::class, 'soter'])->middleware('auth:api');
+Route::post('/admin/categories', [CategoryController::class, 'store'])->middleware(['auth:api' , 'admin']);
+Route::delete('/admin/categories/{id}', [CategoryController::class, 'destroy'])->middleware(['auth:api', 'admin']);
+Route::put('/admin/categories/{id}', [CategoryController::class, 'update'])->middleware(['auth:api', 'admin']);
+
+// Articles
+Route::get('/articles', [ArticleController::class, 'index'])->middleware('auth:api');
+Route::get('/articles/{id}', [ArticleController::class, 'show'])->middleware('auth:api');
+
+// Posts
+Route::get('/posts', [PostController::class, 'index'])->middleware('auth:api');
+Route::get('/posts/{id}', [PostController::class, 'show'])->middleware('auth:api');
+Route::post('/posts', [PostController::class, 'store'])->middleware("auth:api");
+Route::put('/posts/{id}', [PostController::class, 'update'])->middleware("auth:api");
+Route::delete('/posts/{id}', [PostController::class, 'destroy'])->middleware("auth:api");

@@ -1,235 +1,78 @@
 <template>
-  <q-page padding style="max-width: 1200px; margin: 0px auto">
+  <q-page padding>
     <!-- content -->
-    <main class="row q-gutter-x-sm">
-      <!-- posts -->
-      <div class="col-7" style="direction: rtl">
-        <q-scroll-area visible="false" style="height: 90vh; width: 100%;" >
-          <div class="row q-gutter-y-sm q-pa-md">
-            <!-- post -->
-            <div
-              class="col-12 q-pa-md"
-              style="
-                border-radius: 10px;
-                box-shadow: 0px 0px 10px 1px rgba(0, 0, 0, 0.4);
-              "
-            >
-              <!-- user info -->
-              <div class="flex justify-start q-gutter-x-md">
-                <q-avatar>
-                  <img src="avatar.png" alt="profile" />
-                </q-avatar>
-                <div>
-                  <p>مهندس خسته</p>
-                  <p>@mobin_khademi</p>
-                </div>
-              </div>
-              <!-- post image -->
-              <div class="text-center">
-                <img
-                  style="max-width: 500px; max-height: 300px; object-fit: cover"
-                  src="ali.jpg"
-                  alt="postimage"
-                />
-              </div>
-              <!-- description -->
-              <p>
-                از زندگیم راضیم و خیلی خوشحالم که با برنامه شدم . دیگه از اون
-                وضعیت خسته شده بودم که نمیدونستم چیکار کنم
-              </p>
-              <!-- tags -->
-              <div class="q-gutter-x-sm">
-                <span>#روزگفت</span>
-                <span>#زندگی_خوب</span>
-                <span>#برنامه_ریزی</span>
-              </div>
-            </div>
-            <!-- post -->
-            <div
-              class="col-12 q-pa-md"
-              style="
-                border-radius: 10px;
-                box-shadow: 0px 0px 10px 1px rgba(0, 0, 0, 0.4);
-              "
-            >
-              <!-- user info -->
-              <div class="flex justify-start q-gutter-x-md">
-                <q-avatar>
-                  <img src="avatar.png" alt="profile" />
-                </q-avatar>
-                <div>
-                  <p>مهندس خسته</p>
-                  <p>@mobin_khademi</p>
-                </div>
-              </div>
-              <!-- post image -->
-              <div class="text-center">
-                <img
-                  style="max-width: 500px; max-height: 300px; object-fit: cover"
-                  src="ali.jpg"
-                  alt="postimage"
-                />
-              </div>
-              <!-- description -->
-              <p>
-                از زندگیم راضیم و خیلی خوشحالم که با برنامه شدم . دیگه از اون
-                وضعیت خسته شده بودم که نمیدونستم چیکار کنم
-              </p>
-              <!-- tags -->
-              <div class="q-gutter-x-sm">
-                <span>#روزگفت</span>
-                <span>#زندگی_خوب</span>
-                <span>#برنامه_ریزی</span>
-              </div>
-            </div>
-            <!-- post -->
-            <div
-              class="col-12 q-pa-md"
-              style="
-                border-radius: 10px;
-                box-shadow: 0px 0px 50px 2px rgba(0, 0, 0, 0.4);
-              "
-            >
-              <!-- user info -->
-              <div class="flex justify-start q-gutter-x-md">
-                <q-avatar>
-                  <img src="avatar.png" alt="profile" />
-                </q-avatar>
-                <div>
-                  <p>مهندس خسته</p>
-                  <p>@mobin_khademi</p>
-                </div>
-              </div>
-              <!-- description -->
-              <p>
-                از زندگیم راضیم و خیلی خوشحالم که با برنامه شدم . دیگه از اون
-                وضعیت خسته شده بودم که نمیدونستم چیکار کنم
-              </p>
-              <!-- tags -->
-              <div class="q-gutter-x-sm">
-                <span>#روزگفت</span>
-                <span>#زندگی_خوب</span>
-                <span>#برنامه_ریزی</span>
-              </div>
-            </div>
-            <!-- post -->
-            <div
-              class="col-12 q-pa-md"
-              style="
-                border-radius: 10px;
-                box-shadow: 0px 0px 50px 2px rgba(0, 0, 0, 0.4);
-              "
-            >
-              <!-- user info -->
-              <div class="flex justify-start q-gutter-x-md">
-                <q-avatar>
-                  <img src="avatar.png" alt="profile" />
-                </q-avatar>
-                <div>
-                  <p>مهندس خسته</p>
-                  <p>@mobin_khademi</p>
-                </div>
-              </div>
-              <!-- description -->
-              <p>
-                از زندگیم راضیم و خیلی خوشحالم که با برنامه شدم . دیگه از اون
-                وضعیت خسته شده بودم که نمیدونستم چیکار کنم
-              </p>
-              <!-- tags -->
-              <div class="q-gutter-x-sm">
-                <span>#روزگفت</span>
-                <span>#زندگی_خوب</span>
-                <span>#برنامه_ریزی</span>
-              </div>
-            </div>
-            <!-- post -->
-            <div
-              class="col-12 q-pa-md"
-              style="
-                border-radius: 10px;
-                box-shadow: 0px 0px 50px 2px rgba(0, 0, 0, 0.4);
-              "
-            >
-              <!-- user info -->
-              <div class="flex justify-start q-gutter-x-md">
-                <q-avatar>
-                  <img src="avatar.png" alt="profile" />
-                </q-avatar>
-                <div>
-                  <p>مهندس خسته</p>
-                  <p>@mobin_khademi</p>
-                </div>
-              </div>
-              <!-- description -->
-              <p>
-                از زندگیم راضیم و خیلی خوشحالم که با برنامه شدم . دیگه از اون
-                وضعیت خسته شده بودم که نمیدونستم چیکار کنم
-              </p>
-              <!-- tags -->
-              <div class="q-gutter-x-sm">
-                <span>#روزگفت</span>
-                <span>#زندگی_خوب</span>
-                <span>#برنامه_ریزی</span>
-              </div>
-            </div>
-          </div>
-        </q-scroll-area>
-      </div>
+    <section class="row flex flex-center">
+      <div
+        class="col-8 q-pa-xl"
+        style="
+          direction: rtl;
+          border: 1px solid #afafaf;
+          border-radius: 15px;
+          box-shadow: 0px 0px 30px 0px #000000;
+        "
+      >
+        <!-- user info -->
+        <div class="q-gutter-x-md" style="display: flex; align-items: center">
+          <q-img src="avatar.png" width="100px" />
+          <h5 style="font-weight: 800">{{ user.username }}</h5>
+        </div>
 
-      <!-- sidebar -->
-      <div class="col-4 text-white">
-        <div
-          class="column text-center q-px-md"
-          style="
-            /* height: 80vh; */
-            background-color: rgb(0, 146, 127);
-            border-radius: 10px;
-          "
-        >
-          <h6 class="q-my-sm">نظری برای ثبت دارید ؟</h6>
-          <!-- message -->
-          <q-input
-          class="q-my-md"
-            v-model="message"
-            filled
-            type="textarea"
-            placeholder="بنویسید..."
-            style="direction: rtl"
-          />
-          <!-- file picker -->
-          <div>
-            <q-file
-              v-model="file"
-              label="ارسال تصویر"
-              filled
-              style="width: 100%"
-            >
-              <template v-slot:prepend>
-                <q-icon name="attach_file" />
-              </template>
-            </q-file>
-          </div>
-        </div>
-        <div class=" column q-pa-lg bg-amber q-mt-md rounded text-dark">
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Nostrum magnam ipsam neque officiis excepturi delectus asperiores beatae labore quas? Fuga soluta distinctio aliquam excepturi perspiciatis voluptas libero ut incidunt nobis.
+        <!-- post -->
+        <div>
+          <h5>{{ post.title }}</h5>
+          <p>{{ post.content }}</p>
         </div>
       </div>
-    </main>
+    </section>
   </q-page>
 </template>
 
 <script>
-import { ref } from "vue";
+import { ref, onMounted } from "vue";
 import { useQuasar } from "quasar";
+import { useRoute, useRouter } from "vue-router";
+import { api } from "src/boot/axios.js";
+
 export default {
   name: "PostPage",
   setup() {
-    const $q = useQuasar();
-    const file = ref(null);
-    const message = ref("");
+    const q = useQuasar();
+    const route = useRoute();
+    const user = ref([]);
+    
+    const post = ref([]);
 
-    function send() {}
-    return { message, send, file };
+    onMounted(() => {
+      fetchPost();
+    });
+
+    function fetchPost() {
+      api
+        .get("api/posts/" + route.params.id)
+        .then((res) => {
+          console.log(res.data);
+          if (res.data.status) {
+            user.value = res.data.user;
+            
+            post.value = res.data.post;
+          } else {
+            q.notify({
+              color: "red",
+              position: "top",
+              message: res.data.message,
+            });
+          }
+        })
+        .catch((err) => {
+          console.log(err);
+          q.notify({
+            color: "red",
+            position: "top",
+            message: err.message,
+          });
+        });
+    }
+    return { user , post   };
   },
 };
 </script>

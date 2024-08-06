@@ -230,7 +230,7 @@ export default {
             q.notify({
               color: "red",
               position: "top",
-              message: err,
+              message: err.response.data.message,
             });
           });
       }

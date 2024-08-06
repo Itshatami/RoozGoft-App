@@ -9,15 +9,21 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Article extends Model
 {
-    
-    use HasFactory,SoftDeletes;
+
+    use HasFactory;
 
     protected $table = "articles";
     protected $guarded = [];
+    protected $with = ['category'];
 
     // User - inverse
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
+    }
+
+    public function category(): BelongsTo
+    {
+        return $this->belongsTo(Category::class);
     }
 }

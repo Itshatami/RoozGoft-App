@@ -1,8 +1,8 @@
 <?php
 
 namespace App\Http\Controllers\Api;
-use App\Http\Controllers\Controller;
 
+use App\Http\Controllers\Controller;
 use App\Models\Article;
 use Illuminate\Http\Request;
 
@@ -13,15 +13,11 @@ class ArticleController extends Controller
      */
     public function index()
     {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
+        // returns all articles
+        $articles = Article::all();
+        if (!$articles)
+            return response()->json(['status' => false, 'message' => 'empty articles table'], 404);
+        return  response()->json(['status' => true, 'message' => 'All Articles', 'articles' => $articles], 200);
     }
 
     /**
@@ -35,23 +31,22 @@ class ArticleController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Article $article)
+    public function show(string $id)
     {
-        //
-    }
+        // existing check
+        $article = Article::find($id);
+        if (!$article)
+            return response()->json(['status' => false, 'message' => 'article not found'], 404);
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Article $article)
-    {
-        //
+        $category = $article->category;
+        $user = $article->user;
+        return response()->json(['status' => true, 'user' => $user, 'category' => $category, 'article' => $article], 200);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Article $article)
+    public function update(Request $request, string $id)
     {
         //
     }
@@ -59,7 +54,7 @@ class ArticleController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Article $article)
+    public function destroy(string $id)
     {
         //
     }

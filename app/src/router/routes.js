@@ -10,6 +10,11 @@ const routes = [
       },
       {
         path: "posts",
+        component: () => import("pages/PostsPage.vue"),
+        meta: { requireAuth: true },
+      },
+      {
+        path: "posts/:id",
         component: () => import("pages/PostPage.vue"),
         meta: { requireAuth: true },
       },
@@ -18,6 +23,11 @@ const routes = [
         component: () => import("pages/TestPage.vue"),
         meta: { requireAuth: true },
       },
+      {
+        path: "articles/:id",
+        component: () => import("pages/ArticlePage.vue"),
+        meta: { requireAuth: true },
+      }
     ],
   },
   {
