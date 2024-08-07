@@ -32,7 +32,8 @@ class CategoryController extends Controller
             'name' => 'required|min:3|max:255',
             'displayName' => 'required|min:3|max:255',
             'description' => 'required',
-            'image' => 'nullable|image'
+            'image' => 'nullable|image',
+            'colorPallet' => 'required|max:10'
         ]);
         if ($v->fails())
             return response()->json(['status' => false, 'error' => $v->messages()], 400);
@@ -49,7 +50,8 @@ class CategoryController extends Controller
                 "name" => $request->name,
                 'displayName' => $request->displayName,
                 'description' => $request->description,
-                'image' => $ImageName
+                'image' => $ImageName,
+                'colorPallet' => $request->colorPallet
             ]);
             if (!$category)
                 throw new Exception("store category faild!");
@@ -65,7 +67,11 @@ class CategoryController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $category = Category::find($id);
+        if (!$category)
+            return response()->json(['status' => false, 'message' => 'category not found!'], 404);
+
+        return response()->json(['status' => true, 'category' => $category, 'articles' => $category->articles], 200);
     }
 
     /**
@@ -83,6 +89,8 @@ class CategoryController extends Controller
             'name' => 'required|min:3|max:255',
             'displayName' => 'required|min:3|max:255',
             'description' => 'required',
+            'image' => 'nullable|image',
+            'colorPallet' => 'required|max:10'
         ]);
         if ($v->fails())
             return response()->json(['status' => false, 'message' => $v->messages()], 400);
@@ -92,12 +100,13 @@ class CategoryController extends Controller
             $category->name = $request->name;
             $category->displayName = $request->displayName;
             $category->description = $request->description;
+            $category->colorPallet = $request->colorPallet;
             $category->save();
             if (!$category)
                 throw new Exception("update category faild");
             return  response()->json(['status' => true, 'category' => $category], 201);
-        } catch (\Throwable $th) {
-            return response()->json(['status' => false, 'message' => $th->getMessage()], 404);
+        } catch (Exception $e) {
+            return response()->json(['status' => false, 'message' => $e->getMessage()], 404);
         }
     }
 

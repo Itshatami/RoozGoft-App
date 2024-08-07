@@ -89,6 +89,15 @@ h6,
 div {
   font-family: "kalameh" !important;
 }
+
+.kalameh {
+  font-family: kalameh !important;
+}
+.vazir{
+  font-family: vazir;
+}
+
+
 p,
 span,
 button {
@@ -96,8 +105,8 @@ button {
 }
 
 // Cards
-.my-card{
-  transform:scale(1) ;
+.my-card {
+  transform: scale(1);
   transition: transform 0.3s ease;
 }
 .my-card:hover {

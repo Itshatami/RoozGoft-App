@@ -15,11 +15,10 @@
           border-radius: 15px;
         "
       >
-        
         <div>
           <q-icon size="50px" name="dashboard" />
         </div>
-       
+
         <div class="text-white" style="direction: rtl">
           <h6 class="q-my-sm">تمامی دسته بندی ها</h6>
         </div>
@@ -33,21 +32,21 @@
           delay: 1500,
           disableOnInteraction: false,
         }"
-      
         :navigation="true"
         :modules="modules"
         class="mySwiper"
       >
         <swiper-slide v-for="category in categories" :key="category.id">
           <div
-            class="q-pa-sm q-gutter-x-sm"
+            @click="$router.push('categories/' + category.id)"
+            class="q-pa-sm q-gutter-x-sm cursor-pointer"
             style="
               display: flex;
               justify-content: center;
               align-items: center;
-              background-color: rgb(250, 118, 118);
               border-radius: 10px;
             "
+            :style="{ 'background-color': '#' + category.colorPallet }"
           >
             <div style="direction: rtl">
               <p
@@ -59,17 +58,16 @@
                 {{ category.description.substring(0, 50) + "..." }}
               </p>
             </div>
-            <q-img
-              :src="
-                'http://127.0.0.1:8000/storage/images/categories/' +
-                category.image
-              "
-              style="
-                max-width: 100px;
-                max-height: 80px;
-                object-fit: inherit !important;
-              "
-            />
+            <div>
+              <img
+                :src="
+                  'http://127.0.0.1:8000/storage/images/categories/' +
+                  category.image
+                "
+                alt="img"
+                style="max-width: 70px; max-height: 70px; object-fit: cover"
+              />
+            </div>
           </div>
         </swiper-slide>
       </swiper>
@@ -79,144 +77,80 @@
 
     <!-- second category -->
     <section class="row">
-       <!-- billboard -->
-       <div
+      <!-- billboard -->
+      <div
         class="col-12 flex justify-between q-pa-lg q-mb-md"
         style="
-          background: linear-gradient(
-            90deg,
-            #e68200 0%,
-            #ff8d22 100%
-          );
+          background: linear-gradient(90deg, #e68200 0%, #ff8d22 100%);
           border-radius: 15px;
         "
       >
-        
         <div>
           <q-icon size="50px" name="article" />
         </div>
-       
+
         <div class="text-white" style="direction: rtl">
           <h6 class="q-my-sm">تمامی مقاله ها</h6>
         </div>
       </div>
-      <!-- articles -->
-      <div
-        class="q-py-md full-width row justify-between"
-        style="direction: rtl"
-      >
-        <div
-          class="my-card q-pa-lg"
-          style="
-            width: 24%;
-            background-color: rgb(238, 211, 179);
-            border-radius: 15px;
-          "
-        >
-          <div class="flex justify-center">
-            <img src="sleep.png" width="100px" alt="sleep" class="q-mb-md" />
-          </div>
-          <div>
-            <span
-              class="q-mt-lg"
-              style="
-                padding: 6px;
-                background-color: rgb(255, 255, 255);
-                border-radius: 15px;
-                font-size: 8px;
-                font-weight: 900;
-              "
-              >توسعه شخصیت فردی</span
-            >
-            <h5 class="q-my-sm" style="font-weight: 900">خواب</h5>
-            <p>نمیتوانید بخوابید و ساعت خوابتان بهم ریخته ؟</p>
-          </div>
-        </div>
+      <!-- article -->
 
-        <div
-          class="my-card q-pa-lg"
-          style="
-            width: 24%;
-            background-color: rgb(238, 211, 179);
-            border-radius: 15px;
-          "
-        >
-          <div class="flex justify-center">
-            <img src="sleep.png" width="100px" alt="sleep" class="q-mb-md" />
-          </div>
-          <div>
-            <span
-              class="q-mt-lg"
+      <q-scroll-area class="col-12" style="height: 600px">
+        <div class="row q-mt-sm" style="direction: rtl">
+          <div
+            v-for="article in articles"
+            class="col-6 q-pa-md"
+            :key="article.id"
+          >
+            <div
+              class="cursor-pointer"
+              @click="$router.push('articles/' + article.id)"
               style="
-                padding: 6px;
-                background-color: rgb(255, 255, 255);
-                border-radius: 15px;
-                font-size: 8px;
-                font-weight: 900;
+                border-radius: 10px;
+                box-shadow: 0px 9px 30px -5px rgba(0, 0, 0, 0.68);
               "
-              >توسعه شخصیت فردی</span
             >
-            <h5 class="q-my-sm" style="font-weight: 900">خواب</h5>
-            <p>نمیتوانید بخوابید و ساعت خوابتان بهم ریخته ؟</p>
-          </div>
-        </div>
+              <div>
+                <q-img
+                  :src="
+                    'http://127.0.0.1:8000/storage/images/articles/' +
+                    article.image
+                  "
+                  style="
+                    max-height: 200px;
+                    border-top-left-radius: 10px;
+                    border-top-right-radius: 10px;
+                  "
+                />
+              </div>
+              <div class="q-pa-md">
+                <p
+                  style="
+                    font-weight: 600;
+                    font-size: 18px;
+                    font-family: kalameh;
+                  "
+                >
+                  {{ article.title }}
+                </p>
 
-        <div
-          class="my-card q-pa-lg"
-          style="
-            width: 24%;
-            background-color: rgb(238, 211, 179);
-            border-radius: 15px;
-          "
-        >
-          <div class="flex justify-center">
-            <img src="sleep.png" width="100px" alt="sleep" class="q-mb-md" />
-          </div>
-          <div>
-            <span
-              class="q-mt-lg"
-              style="
-                padding: 6px;
-                background-color: rgb(255, 255, 255);
-                border-radius: 15px;
-                font-size: 8px;
-                font-weight: 900;
-              "
-              >توسعه شخصیت فردی</span
-            >
-            <h5 class="q-my-sm" style="font-weight: 900">خواب</h5>
-            <p>نمیتوانید بخوابید و ساعت خوابتان بهم ریخته ؟</p>
+                <q-btn
+                  rounded
+                  class="q-mb-md"
+                  :label="article.category.displayName"
+                  :style="{ background: '#' + article.category.colorPallet }"
+                  size="10px"
+                />
+                <p style="text-align: justify">
+                  {{ article.content.substring(0, 200) + "..." }}
+                </p>
+              </div>
+            </div>
           </div>
         </div>
+      </q-scroll-area>
 
-        <div
-          class="my-card q-pa-lg"
-          style="
-            width: 24%;
-            background-color: rgb(238, 211, 179);
-            border-radius: 15px;
-          "
-        >
-          <div class="flex justify-center">
-            <img src="sleep.png" width="100px" alt="sleep" class="q-mb-md" />
-          </div>
-          <div>
-            <span
-              class="q-mt-lg"
-              style="
-                padding: 6px;
-                background-color: rgb(255, 255, 255);
-                border-radius: 15px;
-                font-size: 8px;
-                font-weight: 900;
-              "
-              >توسعه شخصیت فردی</span
-            >
-            <h5 class="q-my-sm" style="font-weight: 900">خواب</h5>
-            <p>نمیتوانید بخوابید و ساعت خوابتان بهم ریخته ؟</p>
-          </div>
-        </div>
-      </div>
+    
     </section>
   </q-page>
 </template>

@@ -1,14 +1,21 @@
 <template>
-  <q-page padding>
+  <q-page padding style="max-width: 1200px; margin: 0px auto">
     <!-- content -->
+    <q-btn
+      @click="$router.back"
+      outline
+      round
+      class="q-mb-md"
+      icon="arrow_back"
+    />
     <section class="row flex flex-center">
       <div
-        class="col-8 q-pa-xl"
+        class="col-8 q-pa-lg"
         style="
           direction: rtl;
           border: 1px solid #afafaf;
           border-radius: 15px;
-          box-shadow: 0px 0px 30px 0px #000000;
+          box-shadow: 0px 0px -80px 0px #000000;
         "
       >
         <!-- user info -->
@@ -19,15 +26,30 @@
         <!-- category -->
         <div class="q-gutter-x-md" style="display: flex; align-items: center">
           <p style="font-weight: 600">دسته بندی:</p>
-          <p class="q-pa-sm rounded-borders bg-amber-8 text-white">
-            {{ category.displayName }}
-          </p>
+          <q-btn
+
+                  rounded
+                  class="q-mb-md"
+                  :label="category.displayName"
+                  :style="{ background: '#' + category.colorPallet }"
+                  size="10px"
+                />
         </div>
         <!-- article -->
-        <div>
-          <h5>{{ article.title }}</h5>
-          <p>{{ article.content }}</p>
-        </div>
+        <q-scroll-area style="height: 700px" visible="true">
+          <img
+            :src="
+              'http://127.0.0.1:8000/storage/images/articles/' +
+              article.image
+            "
+            alt="img"
+            style="width: 100%;max-height: 300px;object-fit: cover;"
+          />
+          <h5 style="font-weight: bold">{{ article.title }}</h5>
+          <p class="text-body1" style="text-align: justify">
+            {{ article.content }}
+          </p>
+        </q-scroll-area>
       </div>
     </section>
   </q-page>
@@ -61,6 +83,8 @@ export default {
             user.value = res.data.user;
             category.value = res.data.category;
             article.value = res.data.article;
+            console.log(article.value);
+            
           } else {
             q.notify({
               color: "red",

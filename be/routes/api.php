@@ -34,13 +34,15 @@ Route::get("/admin/dashboard", [AdminController::class, 'data'])->middleware(['a
 
 // Categories
 Route::get('/categories', [CategoryController::class, 'index'])->middleware('auth:api');
-Route::post('/admin/categories', [CategoryController::class, 'store'])->middleware(['auth:api' , 'admin']);
+Route::get('/categories/{id}', [CategoryController::class, 'show'])->middleware('auth:api');
+Route::post('/admin/categories', [CategoryController::class, 'store'])->middleware(['auth:api', 'admin']);
 Route::delete('/admin/categories/{id}', [CategoryController::class, 'destroy'])->middleware(['auth:api', 'admin']);
 Route::put('/admin/categories/{id}', [CategoryController::class, 'update'])->middleware(['auth:api', 'admin']);
 
 // Articles
 Route::get('/articles', [ArticleController::class, 'index'])->middleware('auth:api');
 Route::get('/articles/{id}', [ArticleController::class, 'show'])->middleware('auth:api');
+Route::post('/admin/articles', [ArticleController::class, 'store'])->middleware(['auth:api', 'admin']);
 
 // Posts
 Route::get('/posts', [PostController::class, 'index'])->middleware('auth:api');

@@ -9,7 +9,10 @@
           هیچ دسته بندی ثبت نشده!
         </div>
         <div v-else v-for="category in categories[0]" :key="category.id">
-          <div class="row" style="margin: 15px 0px ;border-right: 1px solid gray">
+          <div
+            class="row"
+            style="margin: 15px 0px; border-right: 1px solid gray"
+          >
             <div class="col-1 flex flex-column justify-center items-center">
               <p>{{ category.id }}</p>
             </div>
@@ -33,8 +36,15 @@
                 style="max-width: 60px; max-height: 60px; object-fit: cover"
               />
             </div>
-            <div v-else class="col-3">
-              <img :src="category.image" alt="image" />
+            <div v-else class="col-3 text-center">
+              <img
+                :src="
+                  'http://127.0.0.1:8000/storage/images/categories/' +
+                  category.image
+                "
+                alt="image"
+                style="max-width: 60px; max-height: 60px; object-fit: cover"
+              />
             </div>
             <div
               class="col-3 q-gutter-x-sm flex flex-column justify-center items-center"
@@ -235,7 +245,7 @@ export default {
               position: "top",
               icon: "done",
             });
-            getCategories()
+            getCategories();
           } else {
             q.notify({
               color: "red",

@@ -2,9 +2,12 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Http\Controllers\Controller;
+use Exception;
+use Carbon\Carbon;
 use App\Models\Article;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Validator;
 
 class ArticleController extends Controller
 {
@@ -25,7 +28,40 @@ class ArticleController extends Controller
      */
     public function store(Request $request)
     {
-        //
+           // validate request
+           $v = Validator::make($request->all(), [
+            'category_id' => 'required',
+            'title' => 'required|min:3|max:255',
+            'content' => 'required',
+            'image' => 'nullable|image',
+        ]);
+        if ($v->fails())
+            return response()->json(['status' => false, 'error' => $v->messages()], 400);
+
+        // store image
+        if ($request->has('image')) {
+            $ImageName = Carbon::now()->microsecond . '.' . $request->image->extension();
+            $request->image->storeAs('images/articles', $ImageName, 'public');
+        }
+
+        
+
+        // store category
+        try {
+            $article = Article::create([
+                "user_id" => $request->user()->id,
+                'category_id' => $request->category_id,
+                'title' => $request->title,
+                'content' => $request->content,
+                'image' => $ImageName
+            ]);
+            if (!$article)
+                throw new Exception("store article faild!");
+            return response()->json(['status' => true, 'message' => 'با موفقیت ایجاد شد!', 'article' => $article], 201);
+        } catch (Exception $e) {
+            //throw $th;
+            return response()->json(['status' => false, 'error' => $e->getMessage()], 400);
+        }
     }
 
     /**
