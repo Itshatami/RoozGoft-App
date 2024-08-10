@@ -1,2 +1,2 @@
 # RoozGoft-App
-yall now
+نسخه اولیه روزگفت
