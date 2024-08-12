@@ -8,10 +8,10 @@
         <div v-if="categories === null" class="flex flex-center">
           هیچ دسته بندی ثبت نشده!
         </div>
-        <div v-else v-for="category in categories[0]" :key="category.id">
+        <div v-else v-for="category in categories" :key="category.id + 1">
           <div
             class="row"
-            style="margin: 15px 0px; border-right: 1px solid gray"
+            style="margin: 15px 0px; border-bottom: 1px solid gray"
           >
             <div class="col-1 flex flex-column justify-center items-center">
               <p>{{ category.id }}</p>
@@ -24,7 +24,7 @@
             >
               <!-- <p max="">{{ category.description }}</p> -->
               <q-btn
-                label="دیدن شرح / خلاصه"
+                label="دیدن چکیده"
                 color="primary"
                 @click="showDescription(category.id)"
               />
@@ -51,7 +51,8 @@
             >
               <q-btn
                 @click="showEdit(category.id)"
-                style="background: #04d4b2; color: white"
+                color="green"
+                style="color: white"
                 label="ویرایش"
               />
               <q-btn
@@ -110,23 +111,34 @@
         </q-card-actions>
       </q-card>
     </q-dialog>
-    <!-- edit popup -->
+    <!-- edit dialog -->
     <q-dialog
       v-model="edit"
       backdropFilter="blur(4px) saturate(150%)"
       persistent
     >
-      <q-card style="width: 500px">
+      <q-card style="width: 800px; direction: rtl">
+        <q-card-section class="text-center">
+          <img style="max-width: 200px;max-height: 200px;object-fit: cover;" :src=" 'http://127.0.0.1:8000/storage/images/categories/'+selectedCategory.image" alt="img" />
+        </q-card-section>
         <q-card-section class="row items-center">
-          <q-input standout="bg-teal text-white" v-model="name" label="name" />
+          <q-input
+            class="full-width"
+            standout="bg-teal text-white"
+            v-model="name"
+          >
+            <template v-slot:before>
+              <span style="font-size: 14px">نام دسته بندی: </span>
+            </template>
+          </q-input>
         </q-card-section>
 
         <q-card-section>
-          <q-input
-            standout="bg-teal text-white"
-            v-model="displayName"
-            label="display name"
-          />
+          <q-input standout="bg-teal text-white" v-model="displayName">
+            <template v-slot:before>
+              <span style="font-size: 14px">نام نمایشی دسته بندی: </span>
+            </template>
+          </q-input>
         </q-card-section>
 
         <q-card-section>
@@ -134,18 +146,39 @@
             standout="bg-teal text-white"
             type="textarea"
             v-model="description"
-            label="description"
             style="direction: rtl"
-          />
+          >
+            <template v-slot:before>
+              <span style="font-size: 14px">چکیده دسته بندی: </span>
+            </template>
+          </q-input>
         </q-card-section>
+        <q-card-actions style="direction: rtl !important">
+          <q-input
+            class="full-width"
+            standout="bg-teal text-white"
+            v-model="colorPallet"
+          >
+            <template v-slot:before>
+              <span style="font-size: 14px">رنگ :</span>
+            </template>
+          </q-input>
+        </q-card-actions>
+
+        <q-card-actions align="right">
+          <q-file class="full-width" v-model="image">
+            <template v-slot:before>
+              <span style="font-size: 14px">تصویر :</span>
+            </template>
+          </q-file>
+        </q-card-actions>
 
         <q-card-actions align="right">
           <q-btn flat label="برگشت" color="gray" v-close-popup />
           <q-btn
             @click="updateCategory"
-            flat
             label="ویرایش"
-            color="info"
+            color="secondary"
             :loading="loading"
             :disable="loading"
             v-close-popup
@@ -179,13 +212,14 @@ export default {
     const displayName = ref(null);
     const description = ref(null);
     const image = ref(null);
+    const colorPallet = ref(null);
 
     onMounted(() => {
       getCategories();
     });
 
     function showDescription(id) {
-      let category = categories.value[0].find((cat) => cat.id === id);
+      let category = categories.value.find((cat) => cat.id === id);
       descriptionInModal.value = category.description;
       showModal.value = true;
     }
@@ -196,8 +230,7 @@ export default {
         .then((res) => {
           console.log(res.data);
           if (res.data.status) {
-            // console.log(categories.value);
-            categories.value.push(res.data.categories);
+            categories.value = res.data.categories;
           } else {
             throw new Error(res.data.message);
           }
@@ -212,17 +245,19 @@ export default {
     }
 
     function showEdit(id) {
-      let category = categories.value[0].find((cat) => cat.id === id);
-      selectedCategory.value = category;
+      selectedCategory.value = categories.value.find((cat) => cat.id === id);
       edit.value = true;
-      // updateCategory()
+
+      // seperating selected category - object to variable
       name.value = selectedCategory.value.name;
       displayName.value = selectedCategory.value.displayName;
       description.value = selectedCategory.value.description;
+      colorPallet.value = selectedCategory.value.colorPallet;
+      image.value = selectedCategory.value.image;
     }
 
     function showConfirmation(id) {
-      let category = categories.value[0].find((cat) => cat.id === id);
+      let category = categories.value.find((cat) => cat.id === id);
       selectedCategory.value = category;
       confirm.value = true;
     }
@@ -230,22 +265,34 @@ export default {
     function updateCategory() {
       loading.value = true;
       api
-        .put("api/admin/categories/" + selectedCategory.value.id, {
-          name: name.value,
-          displayName: displayName.value,
-          description: description.value,
-        })
+        .put(
+          "api/admin/categories/" + selectedCategory.value.id,
+          {
+            name: name.value,
+            displayName: displayName.value,
+            description: description.value,
+            colorPallet: colorPallet.value,
+            image: image.value,
+            _method: PUT,
+          },
+          {
+            headers: {
+              "Content-Type": "multipart/form-data",
+            },
+          }
+        )
         .then((res) => {
           console.log(res.data);
           loading.value = false;
           if (res.data.status) {
+            categories.value[selectedCategory.value.id - 1] = res.data.category;
             q.notify({
               message: "باموفقیت ویرایش شد",
               color: "green",
               position: "top",
               icon: "done",
             });
-            getCategories();
+            // getCategories();
           } else {
             q.notify({
               color: "red",
@@ -270,9 +317,19 @@ export default {
         .delete("/api/admin/categories/" + selectedCategory.value.id)
         .then((res) => {
           if (res.data.status) {
-            categories.value[0].splice(selectedCategory.value.id, 1);
+            categories.value = categories.value.filter(
+              (cat) => cat.id !== selectedCategory.value.id
+            );
             confirm.value = false;
           }
+        })
+        .catch((err) => {
+          console.log(err);
+          q.notify({
+            color: "red",
+            position: "top",
+            message: err.response.data.message,
+          });
         });
     }
 
@@ -281,6 +338,7 @@ export default {
       categories,
       showModal,
       description,
+      colorPallet,
       showDescription,
       showEdit,
       deleteCategory,

@@ -20,7 +20,7 @@
         >
           <q-tab @click="router.push('/posts')" name="posts" icon="message" label="پست ها" />
           <q-tab @click="router.push('/')" name="dashboard" icon="dashboard" label="روزگفت" />
-          <q-tab name="profile" icon="man" label="پروفایل" />
+          <q-tab @click="router.push('profile')" name="profile" icon="man" label="پروفایل" />
         </q-tabs>
       </div>
       <router-view />

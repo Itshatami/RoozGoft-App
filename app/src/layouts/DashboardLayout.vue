@@ -16,7 +16,7 @@
       <div class="row">
         <div
           v-if="userData"
-          class="col-12 text-white"
+          class="col-12 text-white q-py-md"
           style="
             display: flex;
             flex-direction: column;
@@ -26,17 +26,22 @@
             background-color: #1976d2;
           "
         >
-          <q-avatar class="q-mt-sm" size="80px">
+        <q-avatar class="q-mt-sm" size="80px">
             <q-img src="avatar.png" />
           </q-avatar>
+          <div class="text-center">
+            <p class="text-body1 q-my-sm">
+              {{ userData.username }}
+              <span>: نام کاربری</span>
+            </p>
+  
+            <p class="text-body1 q-mb-sm">
+              {{ userData.roles[0].role }}
+              <span>: نقش </span>
+            </p>
+          </div>
 
-          <p class="text-body1 q-my-sm">
-            {{ userData.username }}
-          </p>
-
-          <p class="text-body1 q-mb-sm">
-            {{ userData.roles[0].role }}
-          </p>
+        
         </div>
         <!-- fetch userData fails -->
         <div
@@ -47,33 +52,33 @@
           <q-spinner-hourglass color="purple" size="4em" />
         </div>
         <!-- links -->
-        <div class="col-12 q-gutter-y-sm q-pt-md">
+        <div class="col-12 q-gutter-y-sm q-pt-md q-px-sm">
           <q-btn
             @click="router.push('categories')"
-            class="full-width"
+            class="full-width q-py-md"
             icon-right="category"
-            style="background: #ff0080; color: white"
+            style="background: #1976d2; color: white"
             label="دسته بندی ها"
           />
           <q-btn
             @click="router.push('dashboard/articles')"
-            class="full-width"
+            class="full-width q-py-md"
             icon-right="article"
-            style="background: #ff0080; color: white"
+            style="background: #1976d2; color: white"
             label="مقاله ها"
           />
           <q-btn
             @click="router.push('dashboard/posts')"
-            class="full-width"
+            class="full-width q-py-md"
             icon-right="message"
-            style="background: #ff0080; color: white"
+            style="background: #1976d2; color: white"
             label="پست ها"
           />
           <q-btn
             @click="router.push('dashboard/users')"
-            class="full-width"
+            class="full-width q-py-md"
             icon-right="people"
-            style="background: #ff0080; color: white"
+            style="background: #1976d2; color: white"
             label="کاربران"
           />
         </div>

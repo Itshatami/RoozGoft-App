@@ -46,7 +46,7 @@
               align-items: center;
               border-radius: 10px;
             "
-            :style="{ 'background-color': '#' + category.colorPallet }"
+            :style="{ 'background-color':  category.colorPallet }"
           >
             <div style="direction: rtl">
               <p
@@ -138,7 +138,7 @@
                   rounded
                   class="q-mb-md"
                   :label="article.category.displayName"
-                  :style="{ background: '#' + article.category.colorPallet }"
+                  :style="{ background: article.category.colorPallet }"
                   size="10px"
                 />
                 <p style="text-align: justify">

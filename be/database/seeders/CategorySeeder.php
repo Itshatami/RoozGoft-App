@@ -20,7 +20,8 @@ class CategorySeeder extends Seeder
             Category::create([
                 'name' => $category['name'],
                 'displayName' => $category['displayName'],
-                'description' => $category['description']
+                'description' => $category['description'],
+                'colorPallet' => $category['colorPallet']
             ]);
         });
     }

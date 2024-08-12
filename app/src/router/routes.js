@@ -24,6 +24,12 @@ const routes = [
         meta: { requireAuth: true },
       },
       {
+        path: "profile",
+        component: () => import("pages/ProfilePage.vue"),
+        meta: { requireAuth: true },
+      },
+
+      {
         path: "articles/:id",
         component: () => import("pages/ArticlePage.vue"),
         meta: { requireAuth: true },
@@ -77,7 +83,7 @@ const routes = [
         component: () => import("pages/admin/CategoryPage.vue"),
         meta: { requireAuth: true },
       },
-    
+
       {
         path: "articles",
         component: () => import("pages/admin/ArticlePage.vue"),

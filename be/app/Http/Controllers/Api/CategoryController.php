@@ -82,18 +82,25 @@ class CategoryController extends Controller
         $category = Category::find($id);
         if (!$category)
             return response()->json(['status' => false, 'message' => 'not found category'], 404);
-        // return  response()->json(['status' => true,'category'=> $category], 400);
 
-        // request validation
+        
+        
         $v = Validator::make($request->all(), [
-            'name' => 'required|min:3|max:255',
-            'displayName' => 'required|min:3|max:255',
+            'name' => 'required',
+            'displayName' => 'required',
             'description' => 'required',
-            'image' => 'nullable|image',
-            'colorPallet' => 'required|max:10'
+            'image' => 'required|image',
+            'colorPallet' => 'required'
         ]);
         if ($v->fails())
-            return response()->json(['status' => false, 'message' => $v->messages()], 400);
+            return response()->json(['status' => false, 'error' => $v->messages()], 400);
+
+        // store image
+        if ($request->has('image')) {
+            $ImageName = Carbon::now()->microsecond . '.' . $request->image->extension();
+            $request->image->storeAs('images/categories', $ImageName, 'public');
+            $category->image = $ImageName;
+        }
 
         //update category
         try {

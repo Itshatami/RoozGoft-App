@@ -15,16 +15,16 @@ class DatabaseSeeder extends Seeder
         // \App\Models\User::factory(10)->create();
 
         // user -> creates 10 user
-        // $this->call(UserSeeder::class);
+        $this->call(UserSeeder::class);
 
         // role -> creates 1 admin role
-        // $this->call(RoleSeeder::class);
+        $this->call(RoleSeeder::class);
 
         // category ->creates 4 category
-        // $this->call(CategorySeeder::class);
+        $this->call(CategorySeeder::class);
 
         // post -> creates 10 post
-        // $this->call(PostSeeder::class);
+        $this->call(PostSeeder::class);
 
         // article -> creates 10 article
         $this->call(ArticleSeeder::class);

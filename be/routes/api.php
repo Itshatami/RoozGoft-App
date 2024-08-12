@@ -8,6 +8,7 @@ use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\BillboardController;
 use App\Http\Controllers\Api\CategoryController;
 use App\Http\Controllers\Api\PostController;
+use App\Models\User;
 
 /*
 |--------------------------------------------------------------------------
@@ -50,3 +51,9 @@ Route::get('/posts/{id}', [PostController::class, 'show'])->middleware('auth:api
 Route::post('/posts', [PostController::class, 'store'])->middleware("auth:api");
 Route::put('/posts/{id}', [PostController::class, 'update'])->middleware("auth:api");
 Route::delete('/posts/{id}', [PostController::class, 'destroy'])->middleware("auth:api");
+
+// User
+Route::get("/user", function (Request $request) {
+    $user = User::find($request->user()->id);
+    return response()->json(['status' => true, 'user' => $user], 200);
+})->middleware("auth:api");
